@@ -57,7 +57,7 @@ async def slide_match_endpoint(
         simple_target: bool = Form(False)
 ):
     try:
-        if (background is None and target is None) or (background_file.size == 0 and target_file.size == 0):
+        if (background is None and target is None) and (getattr(background_file, "size", 0) == 0 and getattr(target_file, "size", 0) == 0):
             return APIResponse(code=400, message="Both target and background must be provided")
 
         target_bytes = await decode_image(target_file or target)
